@@ -7,3 +7,10 @@ services:
     volumes:
       - .:/app
     command: npm run start:dev
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mydb
