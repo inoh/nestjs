@@ -16,7 +16,6 @@ import {
   ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { UserService } from './service';
-import { User as UserModel } from '@prisma/client';
 
 class UserRequest {
   @ApiProperty()
@@ -44,13 +43,13 @@ class UserController {
 
   @Get()
   @ApiOkResponse({ type: [UserResponse] })
-  async getUsers(): Promise<UserModel[]> {
+  async getUsers(): Promise<UserResponse[]> {
     return this.userService.users();
   }
 
   @Post()
   @ApiCreatedResponse({ type: UserResponse })
-  async craeteUser(@Body() userData: UserRequest): Promise<UserModel> {
+  async craeteUser(@Body() userData: UserRequest): Promise<UserResponse> {
     return this.userService.createUser(userData);
   }
 
@@ -59,7 +58,7 @@ class UserController {
   async updateUser(
     @Param('id') id: string,
     @Body() userData: UserRequest,
-  ): Promise<UserModel> {
+  ): Promise<UserResponse> {
     return this.userService.updateUser({
       where: { id: Number(id) },
       data: userData,
@@ -69,7 +68,7 @@ class UserController {
   @Delete(':id')
   @HttpCode(204)
   @ApiResponse({ status: 204 })
-  async deleteUser(@Param('id') id: string): Promise<UserModel> {
+  async deleteUser(@Param('id') id: string): Promise<UserResponse> {
     return this.userService.deleteUser({ id: Number(id) });
   }
 }
