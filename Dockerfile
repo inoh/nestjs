@@ -1,12 +1,14 @@
-FROM node:20
+FROM --platform=linux/amd64 node:20
+
+ENV NODE_ENV production
 
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY ./dist ./dist
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "node", "dist/src/serverless.js" ]
