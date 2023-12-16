@@ -8,11 +8,11 @@ import {
   Param,
   HttpCode,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from './service';
 import { User as UserModel } from '@prisma/client';
 
 @Controller('users')
-export class UserController {
+class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
@@ -44,3 +44,5 @@ export class UserController {
     return this.userService.deleteUser({ id: Number(id) });
   }
 }
+
+export { UserController as Controller };
